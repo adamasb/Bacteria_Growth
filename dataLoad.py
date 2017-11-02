@@ -32,15 +32,15 @@ def dataLoad(filename):
         # errror handling, we check if the values from the file are within the limits, if not we output error message and remove the line
         if (temp[i] < 10 or temp[i] > 60):
             temp[i],growth[i],bacteria[i] = 0,0,0
-            print("error, the temperature from line", i , "was out of bounds")
+            print("error, the temperature from line", i+1 , "was out of bounds")
         
         elif (growth[i] < 0):
             temp[i],growth[i],bacteria[i] = 0,0,0
-            print("error, the growth rate from line", i , "was out of bounds")
+            print("error, the growth rate from line", i+1 , "was out of bounds")
         
         elif (bacteria[i] < 1 or bacteria[i] > 4):
             temp[i],growth[i],bacteria[i] = 0,0,0
-            print("error, the bacteria from line", i , "was out of bounds")
+            print("error, the bacteria from line", i+1 , "was out of bounds")
             
     #remove all lines with errors
     temp,growth,bacteria = temp[temp!=0],growth[growth!=0],bacteria[bacteria!=0]
