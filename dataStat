@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov  2 14:53:38 2017
+
+@author: adams
+"""
+
+from dataLoad import *
+
+def dataStatistics(data,statistic):
+    statistic = statistic.lower() #lower cases
+    
+    # we calulate for each string input
+    
+    if (statistic == 'mean temperature'):
+        result = np.mean(data[:,0])
+    
+    elif (statistic == 'mean growth rate'):
+        result = np.mean(data[:,1])
+        
+    elif (statistic == 'std temperature'):
+        result = np.std(data[:,0])
+
+    elif (statistic == 'std growth rate'):
+        result = np.std(data[:,1])
+    
+    elif (statistic == 'rows'):
+        result = len(data)
+
+    elif (statistic == 'mean cold growth rate'):
+        cold = np.where(data[:,0]<20)
+        result = np.mean(data[cold,1])
+            
+    elif (statistic == 'mean hot growth rate'):
+        hot = np.where(data[:,0]>50)
+        result = np.mean(data[hot,1])
+    
+    return result
