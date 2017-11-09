@@ -36,12 +36,9 @@ def dataPlot(data):
     lis = mpatches.Patch(color='pink', label="Listeria")
     bro = mpatches.Patch(color='green', label="Brochothrix thermosphacta")
     
-    plt.legend(handles=[sal,bac,lis,bro])
+    #inserts the legends and changes location of them
+    plt.legend(handles=[sal,bac,lis,bro],bbox_to_anchor=(1.05, 1),loc=2, borderaxespad=0)
     
-    
-    #change location of lagends
-    
-    #plt.legend(bbox_to_anchor=(1.05, 1),loc=2, borderaxespad=0.)
     
     
     # here we change the color of the plot
@@ -67,10 +64,7 @@ def dataPlot(data):
     plt.show()
     
     
-    
-    
     #line plot
-    
     
     
     #Vi sorterer vores data
@@ -96,6 +90,7 @@ def dataPlot(data):
     x4 = bacteria4[:,0]
     y4 = bacteria4[:,1]
     
+    
     #vi plotter hver bakterie
     plt.plot(x1, y1, color ='brown')
     plt.plot(x2, y2, color ='blue')
@@ -109,12 +104,12 @@ def dataPlot(data):
     plt.ylabel("Growth rate")
     
     
-    #add legends
+    #add legends as well as changing location of them
     sal = mpatches.Patch(color='brown', label="Salmonella enterica")
     bac = mpatches.Patch(color='blue', label="Bacillus cereus")
     lis = mpatches.Patch(color='pink', label="Listeria")
     bro = mpatches.Patch(color='green', label="Brochothrix thermosphacta")
     
-    plt.legend(handles=[sal,bac,lis,bro])
+    plt.legend(handles=[sal,bac,lis,bro],bbox_to_anchor=(1.05, 1),loc=2, borderaxespad=0)
     
     plt.show()
