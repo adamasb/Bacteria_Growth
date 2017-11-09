@@ -7,8 +7,11 @@ Created on Thu Nov  2 16:12:10 2017
 
 from dataLoad import *
 import matplotlib.pyplot as plt #imports plotting functions
+import matplotlib.patches as mpatches # imports extra functions for plotting
 
 def dataPlot(data):
+    
+    #bar plot
     
     
     a = np.where(data[:,2]==1)
@@ -17,12 +20,46 @@ def dataPlot(data):
     d = np.where(data[:,2]==4)
     
     
-    #x = ("Salmonella enterica", "Bacillus cereus", "Listeria", "Brochothrix thermosphacta")
     x = (1,2,3,4)
     y = (np.size(a),np.size(b),np.size(c),np.size(d))
     
     
-    plt.bar(x,y)
+    #adds labels to the x axis
+    label = ["", "", "", ""]
+    plt.xticks(x,label)
+    
+    
+    #adds legends to identify each bar
+    
+    sal = mpatches.Patch(color='brown', label="Salmonella enterica")
+    bac = mpatches.Patch(color='blue', label="Bacillus cereus")
+    lis = mpatches.Patch(color='pink', label="Listeria")
+    bro = mpatches.Patch(color='green', label="Brochothrix thermosphacta")
+    
+    plt.legend(handles=[sal,bac,lis,bro])
+    
+    
+    #change location of lagends
+    
+    #plt.legend(bbox_to_anchor=(1.05, 1),loc=2, borderaxespad=0.)
+    
+    
+    # here we change the color of the plot
+    
+    plt.bar(x[0],y[0],color="brown")
+    plt.bar(x[1],y[1],color="blue")
+    plt.bar(x[2],y[2],color="pink")
+    plt.bar(x[3],y[3],color="green")
+    
+    
+    
+    #change size of our plot
+    #plt.rcParams["figure.figsize"] = [10,10]
+    #plt.figure(figsize=(10,10))
+    
+    
+    
+    #here we add labels to axis and title
     plt.title("Number of bacteria")
     plt.xlabel("Types of bacteria")
     plt.ylabel("Amount of bacteria")
@@ -32,11 +69,52 @@ def dataPlot(data):
     
     
     
+    #line plot
+    
+    
+    
+    #Vi sorterer vores data
     dataSort = data[data[:,0].argsort()]
     
-    #remember to sort all columns
+    
+    #vi  deler vores data op efter bakterier
+    bacteria1 = dataSort[np.where(dataSort[:,2]==1)]
+    bacteria2 = dataSort[np.where(dataSort[:,2]==2)]
+    bacteria3 = dataSort[np.where(dataSort[:,2]==3)]
+    bacteria4 = dataSort[np.where(dataSort[:,2]==4)]
+    
+    #vi opstiller koordinater for hver bakterie
+    x1 = bacteria1[:,0]
+    y1 = bacteria1[:,1]
+    
+    x2 = bacteria2[:,0]
+    y2 = bacteria2[:,1]
+    
+    x3 = bacteria3[:,0]
+    y3 = bacteria3[:,1]
+    
+    x4 = bacteria4[:,0]
+    y4 = bacteria4[:,1]
+    
+    #vi plotter hver bakterie
+    plt.plot(x1, y1, color ='brown')
+    plt.plot(x2, y2, color ='blue')
+    plt.plot(x3, y3, color ='pink')
+    plt.plot(x4, y4, color ='green')
     
     
+    #here we add labels to axis and title
+    plt.title("Growth rate by temperature")
+    plt.xlabel("Temperature")
+    plt.ylabel("Growth rate")
     
     
+    #add legends
+    sal = mpatches.Patch(color='brown', label="Salmonella enterica")
+    bac = mpatches.Patch(color='blue', label="Bacillus cereus")
+    lis = mpatches.Patch(color='pink', label="Listeria")
+    bro = mpatches.Patch(color='green', label="Brochothrix thermosphacta")
     
+    plt.legend(handles=[sal,bac,lis,bro])
+    
+    plt.show()
