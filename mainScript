@@ -9,7 +9,7 @@ from dataLoad import *
 from dataPlot import *
 from dataStats import *
 
-dataload = True
+dataload = False
 
 #main script
 while(0==0):
