@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov  2 16:12:10 2017
+
+@author: adams
+"""
+
+from dataLoad import *
+import matplotlib.pyplot as plt #imports plotting functions
+
+def dataPlot(data):
+    
+    
+    a = np.where(data[:,2]==1)
+    b = np.where(data[:,2]==2)
+    c = np.where(data[:,2]==3)
+    d = np.where(data[:,2]==4)
+    
+    
+    #x = ("Salmonella enterica", "Bacillus cereus", "Listeria", "Brochothrix thermosphacta")
+    x = (1,2,3,4)
+    y = (np.size(a),np.size(b),np.size(c),np.size(d))
+    
+    
+    plt.bar(x,y)
+    plt.title("Number of bacteria")
+    plt.xlabel("Types of bacteria")
+    plt.ylabel("Amount of bacteria")
+    #plt.grid()
+    plt.show()
+    
+    
+    
+    
+    dataSort = data[data[:,0].argsort()]
+    
+    #remember to sort all columns
+    
+    
+    
+    
+    
