@@ -1,0 +1,82 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov  9 15:25:11 2017
+
+@author: adams
+"""
+
+from dataLoad import *
+from dataPlot import *
+from dataStats import *
+
+dataload = True
+
+#main script
+while(0==0):
+    
+    print("\nYour options are: \n1. Load data \n2. Filter data \n3. Display statistics \n4. Generate plots \n5. Quit")
+    
+    option = input("Choose an option: ")
+    option = option.lower()
+
+    if (option == "load data" or option == "1"):
+        
+        while(True):
+            filename = input("Choose a file: ")
+            if (filename == "quit"):
+                break
+            else:
+                try:
+                    data = dataLoad(filename)
+                    dataload = True
+                    break
+                except (FileNotFoundError):
+                    print("\nFile not found in selected directory")
+                    pass
+                except (ValueError):
+                    print("\nFile has to be .txt format")
+                    pass
+                except (PermissionError):
+                    print("\nFile not found")
+                    pass
+                
+                print("\nIf you do not wish to load a file, type 'quit'")
+
+    #filter data
+    elif (option == "filter data" or option == "2"):
+        print ("waddup homie")
+         
+    #display statistics
+    elif (option == "display statistics" or option == "3"):
+        
+        if dataload == True: 
+            print("\nYour options are: \n1. Mean temperature \n2. Mean growth rate \n3. STD temperature \n4. STD growth rate \n5. Rows \n6. Mean cold growth rate \n7. Mean hot growth rate")
+            
+            while(True):
+                statistic = input("Which statistic would you like to see? ")
+                if (statistic == "quit"):
+                    break
+                else:
+                    try:
+                        print("\n",dataStatistics(data,statistic))
+                        break
+                    except (UnboundLocalError):
+                        print("\nPlease select one of the specified statistics")
+                        pass
+                    print("\nIf you do not wish to print any statistics, type 'quit'")
+        else:
+            print("\nYou must load data first\n")
+    
+    #generate plots
+    elif (option == "generate plots" or option == "4"):
+        
+        if dataload == True:
+            dataPlot(data)
+        else:
+            print("\nYou must load data first\n")
+        
+    #quit
+    elif (option == "quit" or option == "q" or option == "5" ):
+        break
+
+
