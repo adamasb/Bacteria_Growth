@@ -11,6 +11,9 @@ from dataStats import *
 
 dataload = False
 
+filter1 = False
+filter2 = False
+
 #main script
 while(0==0):
     
@@ -28,6 +31,7 @@ while(0==0):
             else:
                 try:
                     data = dataLoad(filename)
+                    dataNoF = data
                     dataload = True
                     break
                 except (FileNotFoundError):
@@ -42,10 +46,75 @@ while(0==0):
                 
                 print("\nIf you do not wish to load a file, type 'quit'")
 
+
+
+
     #filter data
     elif (option == "filter data" or option == "2"):
-        print ("waddup homie")
-         
+        
+        if dataload == True:
+            print ("How would you like to filter the data\n1. Filter by bacteria type(1)\n2. Filter for a range of growth rate(2)\n3. Remove filters(3)")
+            
+            while(True):
+                filter = input("\nChoose a filter: ")
+                
+                #filter for bacteria type
+                if (filter== "1"):
+                    
+                    while(True):
+                        Ftype = input("\nWhich bacteria type would you like to filter for?\n1. Salmonella Enterica\n2. Bacillus Cereus\n3. Listeria\n4. Brochothrix thermosphacta:\n")
+                        
+                        if (Ftype=="1" or Ftype=="2" or Ftype=="3" or Ftype=="4"):
+                            
+                            #we wipe our data file and fill it only with the filtered data
+                            if len(data) == len(dataNoF):
+                                data = np.zeros(3)
+                            
+                            #tilføjer nyt filter
+                            data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
+                            data = data[data[:,0]!=0]
+                            
+                            print("\nYou have selected a filter, would you like to select a new filter\n")
+                            break
+                            
+                        
+                        else:
+                            print("please choose one of the listed options")
+                
+                
+                
+                #filter for growth rate
+                elif (filter =="2"):
+                    
+                    lowerbound=input("Input your lower bound for growth rate: ")
+                    upperbound=input("Input your upper bound for growth rate: ")
+                    
+                    data = data[data[:,1] >= float(lowerbound)]
+                    data = data[data[:,1] <= float(upperbound)]
+                    
+                    print("You have now filtered between", lowerbound,"and",upperbound,". Thanks for flying with SAS Airlines")
+                    
+                    
+                    
+                #remove filters
+                elif (filter == "3"):
+                    data = dataNoF                
+                
+                #quit option
+                elif (filter=="quit" or filter == "q"):
+                    break
+        
+        else:
+            print("\nYou must load data first \n")
+        
+        
+        
+        
+        
+        
+        
+        
+        
     #display statistics
     elif (option == "display statistics" or option == "3"):
         
@@ -67,6 +136,7 @@ while(0==0):
         else:
             print("\nYou must load data first\n")
     
+    
     #generate plots
     elif (option == "generate plots" or option == "4"):
         
@@ -74,6 +144,7 @@ while(0==0):
             dataPlot(data)
         else:
             print("\nYou must load data first\n")
+       
         
     #quit
     elif (option == "quit" or option == "q" or option == "5" ):
