@@ -2,12 +2,13 @@
 """
 Created on Thu Nov  9 15:25:11 2017
 
-@author: adams
+@author: adams og marcus
 """
 
 from dataLoad import *
 from dataPlot import *
 from dataStats import *
+import winsound
 
 dataload = False
 
@@ -15,9 +16,16 @@ filter1 = False
 filter2 = False
 
 #main script
+
+
+print("\nWelcome to Bacteria Calculator 2018 (tm) \n\nFor automated voiceover type '7'")
+
 while(0==0):
     
-    print("\nYour options are: \n1. Load data \n2. Filter data \n3. Display statistics \n4. Generate plots \n5. Quit")
+    #introduction
+    
+    print("_________________________________________________________________________")
+    print("\n1. Load data \n2. Filter data \n3. Display statistics \n4. Generate plots \n5. Play Music \n6. Quit")
     
     option = input("Choose an option: ")
     option = option.lower()
@@ -53,16 +61,17 @@ while(0==0):
     elif (option == "filter data" or option == "2"):
         
         if dataload == True:
-            print ("How would you like to filter the data\n1. Filter by bacteria type(1)\n2. Filter for a range of growth rate(2)\n3. Remove filters(3)")
+            print ("How would you like to filter the data?\n\n1. Filter by bacteria type (1)\n2. Filter for a range of growth rate (2)\n3. Remove filters (3)")
             
             while(True):
-                filter = input("\nChoose a filter: ")
+                filter = input("Choose a filter: ")
                 
                 #filter for bacteria type
-                if (filter== "1"):
+                if (filter == "1"):
                     
                     while(True):
-                        Ftype = input("\nWhich bacteria type would you like to filter for?\n1. Salmonella Enterica\n2. Bacillus Cereus\n3. Listeria\n4. Brochothrix thermosphacta:\n")
+                        print("Which bacteria type would you like to filter for?\n\n1. Salmonella Enterica\n2. Bacillus Cereus\n3. Listeria\n4. Brochothrix thermosphacta:")
+                        Ftype = input("Choose an option: ")
                         
                         if (Ftype=="1" or Ftype=="2" or Ftype=="3" or Ftype=="4"):
                             
@@ -74,7 +83,7 @@ while(0==0):
                             data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
                             data = data[data[:,0]!=0]
                             
-                            print("\nYou have selected a filter, would you like to select a new filter\n")
+                            print("\nYou have selected a filter, would you like to select a new filter?\nType 'quit' to return to the main menu.")
                             break
                             
                         
@@ -92,16 +101,15 @@ while(0==0):
                     data = data[data[:,1] >= float(lowerbound)]
                     data = data[data[:,1] <= float(upperbound)]
                     
-                    print("You have now filtered between", lowerbound,"and",upperbound,". Thanks for flying with SAS Airlines")
-                    
-                    
-                    
-                #remove filters
-                elif (filter == "3"):
-                    data = dataNoF                
+                    print("\nYou have now filtered between", lowerbound,"and",upperbound,".\nType 'quit' to return to the main menu.")
                 
-                #quit option
-                elif (filter=="quit" or filter == "q"):
+                #remove filters and quit
+                elif (filter=="3"):
+                    data = dataNoF
+                    print("\nYou have cleared all filters.")
+                    break
+                
+                elif (filter=="quit" or filter == "q" ):
                     break
         
         else:
@@ -146,8 +154,33 @@ while(0==0):
             print("\nYou must load data first\n")
        
         
+        
+        
+    #musik lol
+    elif (option == "play music" or option == "5"):   
+        print("\nWould you like to play some music? \n\n1. Yes \n2. No \n3. Quit")
+        while(0==0):
+            
+            songinput = input("Choose an option: ")
+            
+            if (songinput == "yes" or songinput == "y" or songinput == "1"):
+                winsound.PlaySound('test.wav', winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP)
+                break
+                    
+            elif (songinput == "no" or songinput == "n" or songinput == "2"):
+                winsound.PlaySound(None, 0)
+                break
+                    
+            elif (songinput == "quit" or songinput == "q" or songinput == "3"):
+                
+                break    
+
+    elif (option == "7"):
+        print("Like we would actually make that")
+    
     #quit
-    elif (option == "quit" or option == "q" or option == "5" ):
+    elif (option == "quit" or option == "q" or option == "6" ):
+        winsound.PlaySound(None, 0)
         break
 
 
