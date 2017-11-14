@@ -12,26 +12,26 @@ def dataStatistics(data,statistic):
     
     # we calulate for each string input
     
-    if (statistic == 'mean temperature'):
+    if (statistic == 'mean temperature' or statistic == "1"):
         result = np.mean(data[:,0])
     
-    elif (statistic == 'mean growth rate'):
+    elif (statistic == 'mean growth rate' or statistic == "2"):
         result = np.mean(data[:,1])
         
-    elif (statistic == 'std temperature'):
+    elif (statistic == 'std temperature' or statistic == "3"):
         result = np.std(data[:,0])
 
-    elif (statistic == 'std growth rate'):
+    elif (statistic == 'std growth rate' or statistic == "4"):
         result = np.std(data[:,1])
     
-    elif (statistic == 'rows'):
+    elif (statistic == 'rows' or statistic == "5"):
         result = len(data)
 
-    elif (statistic == 'mean cold growth rate'):
+    elif (statistic == 'mean cold growth rate' or statistic == "6"):
         cold = np.where(data[:,0]<20)
         result = np.mean(data[cold,1])
             
-    elif (statistic == 'mean hot growth rate'):
+    elif (statistic == 'mean hot growth rate' or statistic == "7"):
         hot = np.where(data[:,0]>50)
         result = np.mean(data[hot,1])
     
