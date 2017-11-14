@@ -23,6 +23,8 @@ def dataLoad(filename):
     
     # we assign each value in every row to our empty arrays
     
+    print("")
+    
     for i in range(rows):
         a,b,c = lines[i].split()
         temp[i] = a
@@ -46,7 +48,7 @@ def dataLoad(filename):
     temp,growth,bacteria = temp[temp!=0],growth[growth!=0],bacteria[bacteria!=0]
     
     
-    # put all the sigle vectors together into a vertical matrix
+    # put all the single vectors together into a vertical matrix
     data = np.vstack((temp,growth,bacteria))
     
     #transpose the matrix to achieve correct format
@@ -55,3 +57,5 @@ def dataLoad(filename):
     
     
     return data
+
+#print(dataLoad("test.txt"))
