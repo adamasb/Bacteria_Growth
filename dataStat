@@ -2,37 +2,56 @@
 """
 Created on Thu Nov  2 14:53:38 2017
 
-@author: adams
+@author: marcus & adams
 """
 
+#-----------------------------------------------------------------------------
+
+#Imports
 from dataLoad import *
 
+#-----------------------------------------------------------------------------
+
+#DataStatistics function
 def dataStatistics(data,statistic):
-    statistic = statistic.lower() #lower cases
     
-    # we calulate for each string input
+    #We turn our input into lower cases
+    statistic = statistic.lower()
     
+#-----------------------------------------------------------------------------
+    
+    #We create calculations for each string input 
+    
+    #Mean temperature
     if (statistic == 'mean temperature' or statistic == "1"):
         result = np.mean(data[:,0])
     
+    #Mean growth rate
     elif (statistic == 'mean growth rate' or statistic == "2"):
         result = np.mean(data[:,1])
         
+    #STD temperature
     elif (statistic == 'std temperature' or statistic == "3"):
         result = np.std(data[:,0])
-
+        
+    #STD growth rate
     elif (statistic == 'std growth rate' or statistic == "4"):
         result = np.std(data[:,1])
     
+    #Rows
     elif (statistic == 'rows' or statistic == "5"):
         result = len(data)
 
+    #Mean cold growth rate
     elif (statistic == 'mean cold growth rate' or statistic == "6"):
         cold = np.where(data[:,0]<20)
         result = np.mean(data[cold,1])
-            
+    
+    #Mean hot growth rate        
     elif (statistic == 'mean hot growth rate' or statistic == "7"):
         hot = np.where(data[:,0]>50)
         result = np.mean(data[hot,1])
     
     return result
+
+#-----------------------------------------------------------------------------
