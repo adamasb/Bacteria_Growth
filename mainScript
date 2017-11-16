@@ -9,7 +9,7 @@ Created on Thu Nov  9 15:25:11 2017
 #imports
 from dataLoad import *
 from dataPlot import *
-from dataStat import *
+from dataStats import *
 import winsound
 
 #-----------------------------------------------------------------------------
@@ -118,14 +118,46 @@ while(True):
                         #userinput bacteria selection
                         if (Ftype=="1" or Ftype=="2" or Ftype=="3" or Ftype=="4"):
                             
+                            #if feedback == "":    
+                             #   feedback = (Ftype + ", ")
+                            #else:
+                             #   feedback = (feedback + Ftype +", ")
+                            
+                            
+                            
+                            
                             #we wipe our data file and fill it only with the filtered data
-                            if len(data) == len(dataNoF):
+                            if bacteriafilter == False and growthfilter == False:
                                 data = np.zeros(3)
                             
                             #add a new filter
-                            data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
-                            data = data[data[:,0]!=0]
-                            bacteriafilter = True
+                                data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
+                                data = data[data[:,0]!=0]
+                                bacteriafilter = True
+                            
+                            
+                            elif growthfilter == True and bacteriafilter == False:
+                                data = np.zeros(3)
+                                data = np.vstack((data,datag[datag[:,2]==int(FtySpe)]))
+                                data = data[data[:,0]!=0]
+                                data = np.unique(data,axis=0)
+                                
+                                bacteriafilter = True
+                                
+                                
+                            elif bacteriafilter == True and growthfilter == False:
+                                data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
+                                data = np.unique(data,axis=0)
+                                
+                                bacteriafilter = True
+                            
+                            else:
+                                data = np.vstack((data,datag[datag[:,2]==int(Ftype)]))
+                                data = np.unique(data,axis=0)
+                                
+                                bacteriafilter = True
+                                
+
 
                             print("\nYou have selected a filter, would you like to select a new filter?\nType 'quit' to return to the main menu.")
                             break
@@ -138,11 +170,49 @@ while(True):
                 #filter for growth rate
                 elif (filter =="2"):
                     
-                    lowerbound=input("Input your lower bound for growth rate: ")
-                    upperbound=input("Input your upper bound for growth rate: ")
+                    #Error messages for filter 2 input
+                    
+                    while(True):
+                        
+                        lb = input("Input your lower bound for growth rate: ")
+                        
+                        try:
+                            if (float(lb) > 0):
+                                lowerbound=float(lb)
+                                break
+                                
+                            else:
+                                print("Lowerbound must be larger than zero")
+                            
+                        except(ValueError):
+                            print("\nThe input must be an integer")
+                    
+                    
+                    
+                    while(True):
+                        
+                        ub = input("Input your upper bound for growth rate: ")
+                        
+                        try:
+                            if (float(ub) > lowerbound):
+                                upperbound = float(ub)
+                                break
+                            else:
+                                print("Upperbound must be larger than lowerbound")
+                            
+                        except(ValueError):
+                            print("\nThe input must be an integer")
+                            
+                        
                     
                     data = data[data[:,1] >= float(lowerbound)]
                     data = data[data[:,1] <= float(upperbound)]
+                    
+                    
+                    datag = dataNoF[dataNoF[:,1] >= float(lowerbound)]
+                    datag = datag[datag[:,1] <= float(upperbound)]
+                    
+                    
                     growthfilter = True
                     
                     print("\nYou have now filtered between", lowerbound,"and",upperbound,".\nType 'quit' to return to the main menu.")
@@ -208,7 +278,7 @@ while(True):
 
 #-----------------------------------------------------------------------------
 
-    #music lol
+    #music
     elif (option == "play music" or option == "6"):   
         print("\nWould you like to play some music? \n\n1. Yes \n2. No \n3. Quit")
         while(0==0):
@@ -231,7 +301,7 @@ while(True):
     
     #fun and games
     elif (option == "8"):
-        print("Like we would actually make that")
+        print("\nLike we would actually make that")
     
 #-----------------------------------------------------------------------------
     
