@@ -1,31 +1,67 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Nov  9 15:25:11 2017
+#-----------------------------------------------------------------------------
 
-@author: adams og marcus
-"""
-
+#imports
 from dataLoad import *
 from dataPlot import *
-from dataStats import *
+from dataStat import *
 import winsound
 
-dataload = False
+#-----------------------------------------------------------------------------
 
+#initial statements
+dataload = False
 filter1 = False
 filter2 = False
+growthfilter = False
+bacteriafilter = False
+
+#-----------------------------------------------------------------------------
 
 #main script
+print("\nWelcome to Bacteria Calculator 2018 (tm) \n\nFor automated voiceover type '8'")
 
-
-print("\nWelcome to Bacteria Calculator 2018 (tm) \n\nFor automated voiceover type '7'")
-
-while(0==0):
+while(True):
     
-    #introduction
+    #main menu
+    print("_________________________________________________________")
+
+#show bacteria filter
+#-----------------------------------------------------------------------------
+
+    if (dataload == False and bacteriafilter == False):
+        print("\nNo data loaded")
+        
+    if (dataload == True and bacteriafilter == False):
+        print("\nNo bacteria filter selected")
+
+    if (dataload == True and bacteriafilter == True):
+        print("\nA bacteria filter is active")
+        
+        #if (np.array_equal(data,dataNoF)==True):
+        #    print("\nNo bacteria filter active")
+        #    break
+        
+        #elif (np.array_equal(data,dataNoF)!=True):
+            
+            #check her for hvilken slags bakterier der er filtreret for
+            #den checker faktisk bare lige nu om der er filter på
+            
+        #    print("\nA filter is active")
+        #    break
+        
+#show growth rate filter
+#-----------------------------------------------------------------------------
     
-    print("_________________________________________________________________________")
-    print("\n1. Load data \n2. Filter data \n3. Display statistics \n4. Generate plots \n5. Play Music \n6. Quit")
+    if (dataload == True and growthfilter == False):
+        print("\nNo growth rate filter selected")
+
+    if (dataload == True and growthfilter == True):
+        print("\nYour growth rate filters are", lowerbound,"and",upperbound)
+
+#load data
+#-----------------------------------------------------------------------------
+    
+    print("\n1. Load data \n2. Filter data \n3. Display statistics \n4. Generate plots \n5. Show data \n6. Play Music \n7. Quit")
     
     option = input("Choose an option: ")
     option = option.lower()
@@ -54,15 +90,15 @@ while(0==0):
                 
                 print("\nIf you do not wish to load a file, type 'quit'")
 
-
-
+#-----------------------------------------------------------------------------
 
     #filter data
     elif (option == "filter data" or option == "2"):
         
         if dataload == True:
-            print ("How would you like to filter the data?\n\n1. Filter by bacteria type (1)\n2. Filter for a range of growth rate (2)\n3. Remove filters (3)")
+            print ("\nHow would you like to filter the data?\n_________________________________________________________\n\n1. Filter by bacteria type\n2. Filter for a range of growth rate\n3. Remove filters")
             
+            #userinput filter selection
             while(True):
                 filter = input("Choose a filter: ")
                 
@@ -70,27 +106,28 @@ while(0==0):
                 if (filter == "1"):
                     
                     while(True):
-                        print("Which bacteria type would you like to filter for?\n\n1. Salmonella Enterica\n2. Bacillus Cereus\n3. Listeria\n4. Brochothrix thermosphacta:")
+                        print("\nWhich bacteria type would you like to filter for?\n_________________________________________________________\n\n1. Salmonella Enterica\n2. Bacillus Cereus\n3. Listeria\n4. Brochothrix thermosphacta:")
                         Ftype = input("Choose an option: ")
                         
+                        #userinput bacteria selection
                         if (Ftype=="1" or Ftype=="2" or Ftype=="3" or Ftype=="4"):
                             
                             #we wipe our data file and fill it only with the filtered data
                             if len(data) == len(dataNoF):
                                 data = np.zeros(3)
                             
-                            #tilføjer nyt filter
+                            #add a new filter
                             data = np.vstack((data,dataNoF[dataNoF[:,2]==int(Ftype)]))
                             data = data[data[:,0]!=0]
-                            
+                            bacteriafilter = True
+
                             print("\nYou have selected a filter, would you like to select a new filter?\nType 'quit' to return to the main menu.")
                             break
-                            
                         
                         else:
-                            print("please choose one of the listed options")
+                            print("Please choose one of the listed options")
                 
-                
+#-----------------------------------------------------------------------------
                 
                 #filter for growth rate
                 elif (filter =="2"):
@@ -100,28 +137,28 @@ while(0==0):
                     
                     data = data[data[:,1] >= float(lowerbound)]
                     data = data[data[:,1] <= float(upperbound)]
+                    growthfilter = True
                     
                     print("\nYou have now filtered between", lowerbound,"and",upperbound,".\nType 'quit' to return to the main menu.")
+                
+#-----------------------------------------------------------------------------
                 
                 #remove filters and quit
                 elif (filter=="3"):
                     data = dataNoF
+                    growthfilter = False
+                    bacteriafilter = False
                     print("\nYou have cleared all filters.")
                     break
                 
                 elif (filter=="quit" or filter == "q" ):
                     break
         
+        #errorhandling for dataload = true or not
         else:
-            print("\nYou must load data first \n")
-        
-        
-        
-        
-        
-        
-        
-        
+            print("You must load data first \n")
+
+#-----------------------------------------------------------------------------
         
     #display statistics
     elif (option == "display statistics" or option == "3"):
@@ -143,7 +180,8 @@ while(0==0):
                     print("\nIf you do not wish to print any statistics, type 'quit'")
         else:
             print("\nYou must load data first\n")
-    
+            
+#-----------------------------------------------------------------------------
     
     #generate plots
     elif (option == "generate plots" or option == "4"):
@@ -152,12 +190,20 @@ while(0==0):
             dataPlot(data)
         else:
             print("\nYou must load data first\n")
-       
-        
-        
-        
-    #musik lol
-    elif (option == "play music" or option == "5"):   
+    
+    
+#-----------------------------------------------------------------------------   
+    #show data 
+    elif (option == "show data" or option == "5"):
+        if (dataload == True):
+            print(data)
+        else:
+            print("\nYou must load data first")
+
+#-----------------------------------------------------------------------------
+
+    #music lol
+    elif (option == "play music" or option == "6"):   
         print("\nWould you like to play some music? \n\n1. Yes \n2. No \n3. Quit")
         while(0==0):
             
@@ -174,13 +220,18 @@ while(0==0):
             elif (songinput == "quit" or songinput == "q" or songinput == "3"):
                 
                 break    
-
-    elif (option == "7"):
+            
+#-----------------------------------------------------------------------------
+    
+    #fun and games
+    elif (option == "8"):
         print("Like we would actually make that")
     
+#-----------------------------------------------------------------------------
+    
     #quit
-    elif (option == "quit" or option == "q" or option == "6" ):
+    elif (option == "quit" or option == "q" or option == "7" ):
         winsound.PlaySound(None, 0)
         break
 
-
+#-----------------------------------------------------------------------------
