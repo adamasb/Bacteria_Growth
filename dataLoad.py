@@ -2,36 +2,47 @@
 """
 Created on Thu Nov  2 12:08:05 2017
 
-@author: adams
+@author: marcus & adams
 """
 
+#-----------------------------------------------------------------------------
+
+#imports
 import numpy as np
 import pandas as pd
 
+#-----------------------------------------------------------------------------
+
+#dataLoad function
 def dataLoad(filename):
     
-    filein = open(filename, "r") # Opens the file for reading
-    lines = filein.readlines() # Reads all lines into an array
+    #We open our file and read all lines into an array
+    filein = open(filename, "r")
+    lines = filein.readlines()
     
-    
+    #We define the lenght of our lines
     rows = len(lines)
     
-    # we create three empty arrays with the length of the columns from the original file
+    #We create three empty arrays with the length of the columns from the given file
     temp = np.zeros(rows)
     growth = np.zeros(rows)
     bacteria = np.zeros(rows)
     
-    # we assign each value in every row to our empty arrays
-    
+    #We create a line between our error messages and line above (in the main script)
     print("")
-    
+
+#-----------------------------------------------------------------------------
+
+    #We assign each value in every row to our empty arrays    
     for i in range(rows):
         a,b,c = lines[i].split()
         temp[i] = a
         growth[i] = b
         bacteria[i] = c
         
-        # errror handling, we check if the values from the file are within the limits, if not we output error message and remove the line
+#-----------------------------------------------------------------------------
+
+        #We check if the values from the file are within the limit, and if it's not we print an error message
         if (temp[i] < 10 or temp[i] > 60):
             temp[i],growth[i],bacteria[i] = 0,0,0
             print("error, the temperature from line", i+1 , "was out of bounds")
@@ -44,18 +55,19 @@ def dataLoad(filename):
             temp[i],growth[i],bacteria[i] = 0,0,0
             print("error, the bacteria from line", i+1 , "was out of bounds")
             
-    #remove all lines with errors
+#-----------------------------------------------------------------------------
+            
+    #We remove all lines with errors
     temp,growth,bacteria = temp[temp!=0],growth[growth!=0],bacteria[bacteria!=0]
     
-    
-    # put all the single vectors together into a vertical matrix
+    #We combine all single vectors into a vertical matrix
     data = np.vstack((temp,growth,bacteria))
     
-    #transpose the matrix to achieve correct format
+    #We transpose the matrix to achieve correct format
     data = data.T
-    
-    
     
     return data
 
-#print(dataLoad("test.txt"))
+#-----------------------------------------------------------------------------
+
+
